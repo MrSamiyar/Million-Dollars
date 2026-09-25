@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#050705">
+<title>۱۰۰ هزار دلار در قدم‌های کوچک</title>
+<style>
+  :root{
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  body{
+    margin:0;
+    font-family:'Vazirmatn','Tahoma',system-ui,sans-serif;
+    background:#060906;
+    background-image:radial-gradient(circle at 50% -10%, #10241a 0%, #060906 55%);
+    color:#eaf5ec;
+    min-height:100%;
+    padding:16px;
+  }
+  .wrap{max-width:680px;margin:0 auto;}
+  .header{
+    background:linear-gradient(135deg,#0d1f12,#04120a);
+    border:1px solid #1e5c33;
+    color:#7CFFA0;
+    text-align:center;
+    padding:20px 14px;
+    border-radius:16px;
+    font-size:1.15rem;
+    font-weight:800;
+    letter-spacing:.3px;
+    text-shadow:0 0 18px rgba(90,255,140,.35);
+  }
+  .header small{
+    display:block;
+    margin-top:6px;
+    color:#8fae95;
+    font-weight:400;
+    font-size:.8rem;
+  }
+  .stats{
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    flex-wrap:wrap;
+    background:#0a140c;
+    border:1px solid #163d22;
+    border-radius:12px;
+    color:#cdeed6;
+    padding:12px 14px;
+    font-size:.85rem;
+    margin-top:10px;
+  }
+  .stats b{color:#4CFF8F;}
+  .progress-bar{
+    height:8px;
+    background:#0a140c;
+    border:1px solid #163d22;
+    border-radius:6px;
+    margin-top:8px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    background:linear-gradient(90deg,#1b7a3f,#4CFF8F);
+    width:0%;
+    transition:width .25s ease;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:12px;
+  }
+  .cell{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    padding:12px 14px;
+    font-size:.98rem;
+    font-weight:700;
+    background:#0c1810;
+    border:1px solid #1c4a29;
+    border-radius:10px;
+    cursor:pointer;
+    user-select:none;
+    color:#e8fff0;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .cell.done{
+    background:#08120b;
+    border-color:#2a6b3d;
+    opacity:.5;
+    text-decoration:line-through;
+  }
+  .cell input{
+    width:19px;height:19px;
+    accent-color:#4CFF8F;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .amount{white-space:nowrap;}
+  .footer-note{
+    text-align:center;
+    color:#5f8a6a;
+    font-size:.78rem;
+    padding:16px 6px 6px;
+  }
+  .reset-btn{
+    display:block;
+    margin:10px auto 0;
+    background:transparent;
+    border:1px solid #2a6b3d;
+    color:#9de8b3;
+    padding:9px 20px;
+    border-radius:10px;
+    font-size:.85rem;
+    cursor:pointer;
+  }
+  .reset-btn:active{background:#0f2417;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    ۱۰۰,۰۰۰ دلار در ۱۰۰ قدم
+    <small>هر مرحله را که تکمیل کردی تیک بزن</small>
+  </div>
+  <div class="stats">
+    <span><b id="doneCount">0</b> از ۱۰۰ انجام شده</span>
+    <span>جمع‌شده: <b id="doneSum">$0</b></span>
+    <span>باقی‌مانده: <b id="remainingSum">$100,000</b></span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="grid" id="grid"></div>
+  <div class="footer-note">پیشرفت شما به‌صورت خودکار روی همین دستگاه ذخیره می‌شود</div>
+  <button class="reset-btn" id="resetBtn">شروع دوباره</button>
+</div>
+
+<script>
+const amounts = [500,500,1200,1200,500,1200,500,2800,600,1200,600,700,500,700,600,1100,900,600,500,500,900,800,800,900,800,1700,2200,500,700,1000,1300,1300,800,1400,600,900,1300,1300,700,500,600,1400,900,1400,1200,800,1500,1500,600,2900,600,500,500,800,900,2900,900,2100,1000,500,500,2800,800,1100,1500,500,800,500,2500,1000,600,600,1100,700,2300,500,700,500,900,500,1300,500,1000,500,1100,800,500,1900,900,1000,700,600,500,500,800,600,700,1000,2400,1500];
+
+const STORAGE_KEY = 'hundred-k-100-progress';
+const grid = document.getElementById('grid');
+const doneCountEl = document.getElementById('doneCount');
+const doneSumEl = document.getElementById('doneSum');
+const remainingSumEl = document.getElementById('remainingSum');
+const TOTAL = amounts.reduce((a,b) => a+b, 0);
+const progressFill = document.getElementById('progressFill');
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const arr = JSON.parse(raw);
+      if(Array.isArray(arr) && arr.length === amounts.length) return arr;
+    }
+  }catch(e){}
+  return new Array(amounts.length).fill(false);
+}
+function saveState(state){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+
+let state = loadState();
+
+function fmt(n){ return '$' + n.toLocaleString('en-US'); }
+
+function render(){
+  grid.innerHTML = '';
+  amounts.forEach((amt, i) => {
+    const cell = document.createElement('label');
+    cell.className = 'cell' + (state[i] ? ' done' : '');
+    cell.innerHTML = `<span class="amount">${fmt(amt)}</span><input type="checkbox" ${state[i] ? 'checked' : ''} data-i="${i}">`;
+    grid.appendChild(cell);
+  });
+  updateStats();
+}
+
+function updateStats(){
+  let count = 0, sum = 0;
+  state.forEach((d,i) => { if(d){ count++; sum += amounts[i]; } });
+  doneCountEl.textContent = count.toLocaleString('fa-IR');
+  doneSumEl.textContent = fmt(sum);
+  remainingSumEl.textContent = fmt(TOTAL - sum);
+  progressFill.style.width = (count / amounts.length * 100) + '%';
+}
+
+grid.addEventListener('change', (e) => {
+  if(e.target && e.target.matches('input[type="checkbox"]')){
+    const i = parseInt(e.target.dataset.i, 10);
+    state[i] = e.target.checked;
+    e.target.closest('.cell').classList.toggle('done', state[i]);
+    saveState(state);
+    updateStats();
+  }
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if(confirm('همه‌ی تیک‌ها پاک بشن؟')){
+    state = new Array(amounts.length).fill(false);
+    saveState(state);
+    render();
+  }
+});
+
+render();
+</script>
+</body>
+</html>
