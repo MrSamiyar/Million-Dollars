@@ -1,0 +1,12 @@
+{
+  "name": "۱۰۰ هزار دلار در ۱۰۰ قدم",
+  "short_name": "100K",
+  "description": "۱۰۰ هزار دلار در ۱۰۰ قدم",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#060906",
+  "theme_color": "#050705",
+  "orientation": "portrait",
+  "lang": "fa",
+  "dir": "rtl"
+}
