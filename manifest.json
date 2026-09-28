@@ -1,6 +1,6 @@
 {
   "name": "$100,000 in Small Steps",
-  "short_name": "$100K Steps",
+  "short_name": "$100K",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#060906",
