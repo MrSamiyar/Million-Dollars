@@ -1,4 +1,4 @@
-const CACHE_NAME = 'million-dollars-v3';
+const CACHE_NAME = 'million-dollars-v4';
 
 const FILES_TO_CACHE = [
   './',
@@ -7,7 +7,6 @@ const FILES_TO_CACHE = [
   './icon-192.png',
   './icon-512.png'
 ];
-
 
 self.addEventListener('install', event => {
 
