@@ -1,7 +1,11 @@
 {
-  "name": "$100,000 in Small Steps",
+  "name": "$100K",
   "short_name": "$100K",
+  "description": "$100K",
+  "lang": "en",
+  "dir": "ltr",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#060906",
   "theme_color": "#050705",
