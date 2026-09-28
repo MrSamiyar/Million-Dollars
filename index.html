@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 
 <head>
 
@@ -24,7 +24,7 @@ href="./icon-192.png">
 <link rel="apple-touch-icon"
 href="./icon-192.png">
 
-<title>100 هزار دلار در قدم‌های کوچک</title>
+<title>$100,000 in Small Steps</title>
 
 <style>
 
@@ -285,10 +285,10 @@ body{
 
   <div class="header">
 
-    ۱۰۰,۰۰۰ دلار در ۱۰۰ قدم
+    $100,000 in 100 Steps
 
     <small>
-      هر مرحله را که تکمیل کردی تیک بزن
+      Check off each step as you complete it
     </small>
 
   </div>
@@ -298,16 +298,16 @@ body{
 
     <span>
 
-      <b id="doneCount">۰</b>
+      <b id="doneCount">0</b>
 
-      از ۱۰۰ انجام شده
+      of 100 completed
 
     </span>
 
 
     <span>
 
-      جمع‌شده:
+      Collected:
 
       <b id="doneSum">$0</b>
 
@@ -316,7 +316,7 @@ body{
 
     <span>
 
-      باقی‌مانده:
+      Remaining:
 
       <b id="remainingSum">$100,000</b>
 
@@ -343,8 +343,8 @@ body{
 
   <div class="footer-note">
 
-    پیشرفت شما به‌صورت خودکار
-    روی همین دستگاه ذخیره می‌شود
+    Your progress is automatically
+    saved on this device
 
   </div>
 
@@ -353,7 +353,7 @@ body{
     class="reset-btn"
     id="resetBtn">
 
-    شروع دوباره
+    Start Over
 
   </button>
 
@@ -569,7 +569,7 @@ function updateStats(){
 
 
   doneCountEl.textContent =
-    count.toLocaleString('fa-IR');
+    count.toLocaleString('en-US');
 
 
   doneSumEl.textContent =
@@ -640,7 +640,7 @@ document
 
       if(
         confirm(
-          'همه‌ی تیک‌ها پاک بشن؟'
+          'Clear all checked steps?'
         )
       ){
 
@@ -675,7 +675,7 @@ if(
           () => {
 
             console.log(
-              'PWA Service Worker فعال شد'
+              'PWA Service Worker activated'
             );
 
           }
@@ -684,7 +684,7 @@ if(
           error => {
 
             console.log(
-              'خطا در فعال‌سازی Service Worker:',
+              'Service Worker activation error:',
               error
             );
 
