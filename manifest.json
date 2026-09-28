@@ -1,26 +1,21 @@
 {
-  "name": "100 هزار دلار در 100 قدم",
-  "short_name": "$100K",
-  "description": "100 هزار دلار در 100 قدم",
+  "name": "$100,000 in Small Steps",
+  "short_name": "$100K Steps",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#060906",
   "theme_color": "#050705",
   "orientation": "portrait",
-  "lang": "fa",
-  "dir": "rtl",
   "icons": [
     {
       "src": "./icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "./icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
